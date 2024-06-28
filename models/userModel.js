@@ -22,17 +22,30 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
+  contactnumber: {
+    type: String,
+  },
+  role: [
+    {
+      type: String,
+    },
+  ],
 });
 
 userSchema.statics.signup = async function (
   email,
   password,
   firstname,
-  lastname
+  lastname,
+  contactnumber,
+  role
 ) {
   if (!email || !password) throw Error("Email or Password is Empty");
 
   if (!validator.isEmail(email)) throw Error("Email is not valid");
+
+  if (!validator.isNumeric(contactnumber))
+    throw Error("Contact should contains only number");
 
   const exists = await this.findOne({ email });
 
@@ -41,13 +54,14 @@ userSchema.statics.signup = async function (
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
 
-  const role = "client";
+  //const role = "client";
 
   const user = await this.create({
     email,
     password: hash,
     firstname,
     lastname,
+    role,
   });
 
   //   const client = await new Client({
