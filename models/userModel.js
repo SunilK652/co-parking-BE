@@ -2,6 +2,7 @@ const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
 const randomString = require("randomstring");
 const validator = require("validator");
+const Client = require("./clientModel");
 const { ClientEncryption } = require("mongodb");
 
 const userSchema = new Schema({
@@ -26,11 +27,6 @@ const userSchema = new Schema({
   contactnumber: {
     type: String,
   },
-  role: [
-    {
-      type: String,
-    },
-  ],
 });
 
 userSchema.statics.signup = async function (
@@ -38,8 +34,7 @@ userSchema.statics.signup = async function (
   email,
   password,
   confirmpassword,
-  contactnumber,
-  role
+  contactnumber
 ) {
   if (!email || !password) throw Error("Email or Password is Empty");
 
@@ -55,7 +50,7 @@ userSchema.statics.signup = async function (
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
 
-  //const role = "client";
+  // const role = "client";
 
   const user = await this.create({
     name,
@@ -63,7 +58,6 @@ userSchema.statics.signup = async function (
     password: hash,
     confirmpassword,
     contactnumber,
-    role,
   });
 
   const client = await new Client({

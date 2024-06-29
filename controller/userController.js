@@ -10,8 +10,6 @@ const loginUser = async (req, res) => {
 
   try {
     const user = await User.login(email, password);
-
-    const role = await user.role;
     // const isUserVerified = await user.isUserVerified;
 
     const token = createToken(user._id);
@@ -23,8 +21,7 @@ const loginUser = async (req, res) => {
 };
 
 const signupUser = async (req, res) => {
-  const { name, email, password, confirmpassword, contactnumber, role } =
-    req.body;
+  const { name, email, password, confirmpassword, contactnumber } = req.body;
 
   try {
     const user = await User.signup(
@@ -32,7 +29,7 @@ const signupUser = async (req, res) => {
       email,
       password,
       confirmpassword,
-      role
+      contactnumber
     );
 
     // create a token

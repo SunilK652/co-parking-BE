@@ -17,4 +17,5 @@ const getAllAddress = async (req, res) => {
   const user_id = req.user._id;
   const address = await User.findOne({ _id: user_id });
 };
+
 module.exports = { addnewAddress, getAllAddress };

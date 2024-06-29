@@ -4,10 +4,7 @@ const { model, Schema } = mongoose;
 
 const clientSchema = new Schema({
   client: { type: Schema.Types.ObjectId, ref: "User" },
-  firstName: {
-    type: String,
-  },
-  lastName: {
+  name: {
     type: String,
   },
 });
