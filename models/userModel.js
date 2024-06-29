@@ -5,10 +5,6 @@ const validator = require("validator");
 const { ClientEncryption } = require("mongodb");
 
 const userSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
   email: {
     type: String,
     required: true,
@@ -18,7 +14,11 @@ const userSchema = new Schema({
     type: String,
     required: true,
   },
-  confirmpassword: {
+  firstname: {
+    type: String,
+    required: true,
+  },
+  lastname: {
     type: String,
     required: true,
   },
@@ -33,16 +33,19 @@ const userSchema = new Schema({
 });
 
 userSchema.statics.signup = async function (
-  name,
   email,
   password,
-  confirmpassword,
+  firstname,
+  lastname,
   contactnumber,
   role
 ) {
   if (!email || !password) throw Error("Email or Password is Empty");
 
   if (!validator.isEmail(email)) throw Error("Email is not valid");
+
+  if (!validator.isNumeric(contactnumber))
+    throw Error("Contact should contains only number");
 
   const exists = await this.findOne({ email });
 
@@ -56,7 +59,8 @@ userSchema.statics.signup = async function (
   const user = await this.create({
     email,
     password: hash,
-    name,
+    firstname,
+    lastname,
     role,
   });
 
