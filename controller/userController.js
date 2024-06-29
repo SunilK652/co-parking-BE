@@ -11,7 +11,7 @@ const loginUser = async (req, res) => {
   try {
     const user = await User.login(email, password);
 
-    // const role = await user.role;
+    const role = await user.role;
     // const isUserVerified = await user.isUserVerified;
 
     const token = createToken(user._id);
@@ -23,15 +23,22 @@ const loginUser = async (req, res) => {
 };
 
 const signupUser = async (req, res) => {
-  const { email, password, firstName, lastName } = req.body;
+  const { name, email, password, confirmpassword, contactnumber, role } =
+    req.body;
 
   try {
-    const user = await User.signup(email, password, firstName, lastName);
+    const user = await User.signup(
+      name,
+      email,
+      password,
+      confirmpassword,
+      role
+    );
 
     // create a token
     const token = createToken(user._id);
 
-    res.status(200).json({ email, token });
+    res.status(200).json({ email, token, message: "signup successful" });
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
