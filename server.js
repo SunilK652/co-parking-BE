@@ -1,6 +1,9 @@
 const express = require("express");
 const { dbConnect } = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
+const ownerRoutes = require("./routes/ownerRoutes");
+const paymentRoutes = require('./routes/paymentRoutes');
+
 const cors = require("cors");
 const app = express();
 app.use(cors());
@@ -28,3 +31,5 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/user", userRoutes);
+app.use('/api/owner', ownerRoutes);
+app.use('/api/payment', paymentRoutes);
