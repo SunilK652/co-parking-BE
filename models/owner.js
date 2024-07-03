@@ -37,6 +37,18 @@ const ownerSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    price:{
+        type: Number,
+        required: true
+    },
+    fromDate: {
+        type:String,
+        required:true
+    },
+    toDate: {
+        type:String,
+        required:true
+    }
 });
 
 const Owner = mongoose.model('Owner', ownerSchema);

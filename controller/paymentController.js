@@ -28,7 +28,7 @@ exports.generateQRCode = async (req, res) => {
     }
     try {
         const paymentResponse = await processPayment(token);
-        res.status(200).send({message:"Token recieved", response: paymentResponse});
+        //res.status(200).send({message:"Token recieved", response: paymentResponse});
         res.status(200).json({message:"Token recieved", response: paymentResponse})
     } catch (error) {
         res.status(500).json({error: 'Payment processing failed'})

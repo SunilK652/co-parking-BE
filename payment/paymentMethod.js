@@ -22,7 +22,7 @@ const processPayment = async (token) => {
   };
 
   const headers = {
-    'Authorization': 'Bearer sk_sbox_bp5bxl5io2f4hcfigrme2ccpeit',
+    'Authorization': 'Bearer sk_sbox_lech3ylh45sdn43jfmnsnoprbey',
     'Content-Type': 'application/json',
   };
 
