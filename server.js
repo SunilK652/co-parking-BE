@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const { dbConnect } = require("./config/db");
+//const { dbConnect } = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
 const ownerRoutes = require("./routes/ownerRoutes");
 const paymentRoutes = require('./routes/paymentRoutes');
@@ -13,7 +13,9 @@ const port = process.env.PORT || 3000;
 
 const dbURL = 'mongodb+srv://skulkarni652:Sunil123@cluster0.jnmgx4n.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
-exports.dbConnect = async function () {
+
+
+async function dbConnect() {
   try {
     await mongoose.connect(dbURL, {
       // useNewUrlParser: true,
@@ -22,8 +24,10 @@ exports.dbConnect = async function () {
     console.log("DB Connected");
   } catch (error) {
     console.log("DB Connection failed: ", error);
+    process.exit(1);
   }
-};
+}
+
 
 dbConnect()
   .then(() => {
@@ -49,3 +53,5 @@ app.get("/", (req, res) => {
 app.use("/api/user", userRoutes);
 app.use('/api/owner', ownerRoutes);
 app.use('/api/payment', paymentRoutes);
+
+module.exports = app;
