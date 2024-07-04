@@ -15,7 +15,8 @@ const addOwner = async (req, res) => {
 const getOwners = async (req, res) => {
     const userId = req.user._id;
     try {
-        const owners = await Owner.find({ userId });
+        // const owners = await Owner.find({ userId });
+        const owners = await Owner.find();
         res.status(200).send(owners);
     } catch (error) {
         res.status(500).send(error.message);
