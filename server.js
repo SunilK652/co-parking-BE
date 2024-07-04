@@ -16,8 +16,8 @@ const dbURL = 'mongodb+srv://skulkarni652:Sunil123@cluster0.jnmgx4n.mongodb.net/
 exports.dbConnect = async function () {
   try {
     await mongoose.connect(dbURL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      // useNewUrlParser: true,
+      // useUnifiedTopology: true,
     });
     console.log("DB Connected");
   } catch (error) {
