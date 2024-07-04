@@ -22,32 +22,37 @@ const ownerSchema = new mongoose.Schema({
         required: true
     },
     landMark: {
-        type:String,
+        type: String,
         required: false
     },
     segment: {
-        type:String,
-        required:true
+        type: String,
+        required: true
     },
     city: {
-        type:String,
-        required:true
+        type: String,
+        required: true
     },
-    state:{
-        type:String,
-        required:true
+    state: {
+        type: String,
+        required: true
     },
-    price:{
+    price: {
         type: Number,
         required: true
     },
     fromDate: {
-        type:String,
-        required:true
+        type: String,
+        required: true
     },
     toDate: {
-        type:String,
-        required:true
+        type: String,
+        required: true
+    },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     }
 });
 
