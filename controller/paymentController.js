@@ -2,6 +2,7 @@
 const QRCode = require('qrcode');
 const Payment = require('../models/payment');
 const { processPayment } = require('../payment/paymentMethod'); 
+const Owner = require('../models/owner');
 
 exports.generateQRCode = async (req, res) => {
     try {
@@ -9,9 +10,6 @@ exports.generateQRCode = async (req, res) => {
       const dummyPaymentInfo = `upi://pay?pa=dummymerchant@upi&pn=Dummy Merchant&am=${amount}&cu=INR`;
   
       const qrCodeData = await QRCode.toDataURL(dummyPaymentInfo);
-  
-      // You may choose not to save this dummy payment in your database
-      // since it's just for testing purposes.
   
       res.json({ qrCodeData });
     } catch (error) {
@@ -34,6 +32,22 @@ exports.generateQRCode = async (req, res) => {
         res.status(500).json({error: 'Payment processing failed'})
     }
   }
+
+  exports.confirmPayment = async (req, res) => {
+    try {
+      const { paymentConfirmed } = req.body;
+      const userId = req.user._id;
+  
+      if (paymentConfirmed) {
+        await Owner.updateMany({ userId }, { parkingStatus: 'booked' });
+      }
+  
+      res.status(200).json({ message: 'Payment confirmed successfully', paymentConfirmed });
+    } catch (error) {
+      console.error('Error confirming payment:', error);
+      res.status(500).json({ message: 'Failed to confirm payment', error });
+    }
+  };
 
 
 

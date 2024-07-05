@@ -15,13 +15,19 @@ const addOwner = async (req, res) => {
 const getOwners = async (req, res) => {
     const userId = req.user._id;
     try {
-        // const owners = await Owner.find({ userId });
-        const owners = await Owner.find();
-        res.status(200).send(owners);
+     // const owners = await Owner.find({ userId });
+       const owners = await Owner.find();
+  
+      const response = owners.map(owner => ({
+        ...owner._doc,
+        parkingStatus: owner.parkingStatus,
+      }));
+  
+      res.status(200).send(response);
     } catch (error) {
-        res.status(500).send(error.message);
+      res.status(500).send(error.message);
     }
-};
+  };
 
 module.exports = {
     addOwner,

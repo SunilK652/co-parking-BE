@@ -53,7 +53,12 @@ const ownerSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
-    }
+    },
+    parkingStatus: {
+        type: String,
+        enum: ['available', 'booked'],
+        default: 'available',
+      },
 });
 
 const Owner = mongoose.model('Owner', ownerSchema);
