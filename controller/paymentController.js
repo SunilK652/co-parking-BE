@@ -35,19 +35,22 @@ exports.generateQRCode = async (req, res) => {
 
   exports.confirmPayment = async (req, res) => {
     try {
-      const { paymentConfirmed } = req.body;
+      const { parkingId, paymentConfirmed } = req.body;
       const userId = req.user._id;
-  
-      if (paymentConfirmed) {
-        await Owner.updateMany({ userId }, { parkingStatus: 'booked' });
+      
+      if (paymentConfirmed && parkingId) {
+        await Owner.updateOne({ _id: parkingId, userId }, { parkingStatus: 'booked' });
+        res.status(200).json({ message: 'Payment confirmed and parking status updated successfully', paymentConfirmed });
+      } else {
+        res.status(400).json({ message: 'Payment not confirmed or parking ID not provided' });
       }
-  
-      res.status(200).json({ message: 'Payment confirmed successfully', paymentConfirmed });
     } catch (error) {
       console.error('Error confirming payment:', error);
       res.status(500).json({ message: 'Failed to confirm payment', error });
     }
   };
+  
+  
 
 
 

@@ -15,8 +15,8 @@ const addOwner = async (req, res) => {
 const getOwners = async (req, res) => {
     const userId = req.user._id;
     try {
-     // const owners = await Owner.find({ userId });
-       const owners = await Owner.find();
+     const owners = await Owner.find({ userId });
+     //  const owners = await Owner.find();
   
       const response = owners.map(owner => ({
         ...owner._doc,
